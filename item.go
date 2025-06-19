@@ -11,13 +11,16 @@ type Item struct {
 }
 
 func (i Item) PrintDetails() string {
-	stringVal := strconv.FormatFloat(i.Price, 'f',-1,64)
-	details := fmt.Sprintf("%v, $%v", i.Name, stringVal)
-	return details
+	stringVal := strconv.FormatFloat(i.Price, 'f', -1, 64)
+
+	printString := fmt.Sprintf("%v, $%v", i.Name, stringVal)
+	fmt.Println(printString)
+
+	return printString
 }
 
-func (i Item) CreateItem(name string, price float64) (string, *Item) {
+func (i Item) CreateItem(name string, price float64) Item {
 	menuItem := Item{name, price}
-	msg := fmt.Sprintf("%v was created", name)
-	return msg, &menuItem
+	fmt.Println("Created", menuItem.Name)
+	return menuItem
 }
