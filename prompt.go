@@ -21,23 +21,23 @@ func ItemPrompt() Item {
 
 	for {
 		fmt.Print("What is the item name? ")
-		//Handle error
 		name, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Printf("an error occurred %v", err)
 		}
 		itemName = strings.TrimSpace(name)
-		// var cost float64
+
 		fmt.Print("What is the item cost? ")
-		cost, err := reader.ReadString('\n')
+		stringPrice, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Printf("An error occurred while reading the item name %v \n", err)
 			continue
 		}
-		cost = strings.TrimSpace(cost)
-		itemPrice, err = strconv.ParseFloat(cost, 64)
+		stringPrice = strings.TrimSpace(stringPrice)
+		itemPrice, err = strconv.ParseFloat(stringPrice, 64)
+
 		if err != nil {
-			fmt.Printf("Invalid cost, '%s'.Please enter a valid number.\n", cost)
+			fmt.Printf("Invalid cost, '%s'.Please enter a valid number.\n", stringPrice)
 			continue
 		}
 
