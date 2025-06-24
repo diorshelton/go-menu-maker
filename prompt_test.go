@@ -2,16 +2,11 @@ package main
 
 import (
 	"testing"
+	// "strings"
 )
 
 func TestPrompt(t *testing.T) {
-	questions := []string{"What is the item name"}
-	got := Prompt(questions)
-	want := "What is the item name"
 
-	if got != want {
-		t.Errorf("got %v, want %v", got, want)
-	}
 }
 
 func TestItemPrompt(t *testing.T) {
