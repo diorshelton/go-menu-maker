@@ -1,6 +1,7 @@
 package main
 
-func main() {
+import "os"
 
-	ItemPrompt()
+func main() {
+	ItemPrompt(os.Stdin)
 }

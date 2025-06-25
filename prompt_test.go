@@ -1,17 +1,16 @@
 package main
 
 import (
+	"strings"
 	"testing"
-	// "strings"
 )
 
-func TestPrompt(t *testing.T) {
-
-}
-
 func TestItemPrompt(t *testing.T) {
-	got := ItemPrompt()
-	want := Item{Name: "Boba Tea", Price: 7.99}
+	input := "boba tea\n7.99\nyes\n"
+	reader := strings.NewReader(input)
+
+	got := ItemPrompt(reader)
+	want := Item{Name: "boba tea", Price: 7.99}
 
 	if got != want {
 		t.Errorf("got %v want %v", got, want)
