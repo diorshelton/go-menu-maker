@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 )
@@ -10,6 +11,17 @@ type Item struct {
 	Price float64
 }
 
+var ErrInvalidPrice = errors.New("cannot create item with price of 0 or less")
+
+func (i Item) CreateItem(name string, price float64) (Item, error) {
+	if price <= 0 {
+		return Item{}, ErrInvalidPrice
+	}
+	menuItem := Item{name, price}
+	fmt.Printf("Created %v", menuItem.Name)
+	return menuItem, nil
+}
+
 func (i Item) PrintDetails() string {
 	stringVal := strconv.FormatFloat(i.Price, 'f', -1, 64)
 
@@ -17,10 +29,4 @@ func (i Item) PrintDetails() string {
 	fmt.Println(printString)
 
 	return printString
-}
-
-func (i Item) CreateItem(name string, price float64) Item {
-	menuItem := Item{name, price}
-	fmt.Println("Created", menuItem.Name)
-	return menuItem
 }
