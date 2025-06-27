@@ -5,37 +5,40 @@ import (
 )
 
 func TestCreateItem(t *testing.T) {
-	assertValidPrice := func(t testing.TB, got error, want error) {
-		t.Helper()
-
-		if got != want {
-			t.Errorf("got %q, want %q", got, want)
-		}
-	}
-
-	assertValidString := func(t testing.TB, got error, want string) {
-		t.Helper()
-		if got == nil {
-			t.Fatal("wanted an error but didn't get one")
-		}
-		if got.Error() != want {
-			t.Errorf("got %q, want %q", got, want)
-		}
-	}
-
-	t.Run("invalid price", func(t *testing.T) {
-		roastBeefSandwich := Item{}
-		_, err := roastBeefSandwich.CreateItem("Roast beef Sandwich", 0)
-
-		assertValidPrice(t, err, ErrInvalidPrice)
-	})
-
-	t.Run("invalid item name", func(t *testing.T) {
+	t.Run("item name is an empty string", func(t *testing.T) {
 		salad := Item{}
 		_, err := salad.CreateItem("", 12)
 
-		assertValidString(t, err, ErrInvalidName.Error())
+		assertInvalidStringError(t, err, ErrInvalidName)
 	})
+
+	t.Run("item price 0 or less", func(t *testing.T) {
+		roastBeefSandwich := Item{}
+		_, err := roastBeefSandwich.CreateItem("Roast beef Sandwich", 0)
+
+		assertInvalidPriceError(t, err, ErrInvalidPrice)
+	})
+
+}
+
+func assertInvalidStringError(t testing.TB, got, want error) {
+	t.Helper()
+	if got == nil {
+		t.Fatal("wanted an error but didn't get one")
+	}
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
+}
+
+func assertInvalidPriceError(t testing.TB, got, want error) {
+	t.Helper()
+	if got == nil {
+		t.Fatal("wanted an error but didn't get one")
+	}
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
 }
 
 func TestPrintDetails(t *testing.T) {
