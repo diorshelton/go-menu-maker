@@ -23,6 +23,15 @@ func TestCreateItem(t *testing.T) {
 
 		assertValidPrice(t, err, ErrInvalidPrice)
 	})
+
+	t.Run("invalid item name", func(t *testing.T) {
+		salad := Item{}
+		_, err := salad.CreateItem("", 12)
+
+		if err == nil {
+			t.Error("wanted an error but didn't get one")
+		}
+	})
 }
 
 func TestPrintDetails(t *testing.T) {
