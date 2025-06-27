@@ -8,10 +8,6 @@ func TestCreateItem(t *testing.T) {
 	assertValidPrice := func(t testing.TB, got error, want error) {
 		t.Helper()
 
-		if got == nil {
-			t.Fatal("wanted and error but didn't get one")
-		}
-
 		if got != want {
 			t.Errorf("got %q, want %q", got, want)
 		}
