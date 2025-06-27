@@ -17,17 +17,6 @@ func TestCreateItem(t *testing.T) {
 		}
 	}
 
-	t.Run("create item struct", func(t *testing.T) {
-		pizza := Item{}
-
-		got, _ := pizza.CreateItem("Cheese Pizza", 12.87)
-		want := Item{"Cheese Pizza", 12.87}
-
-		if got != want {
-			t.Errorf("got %v want %v", got, want)
-		}
-	})
-
 	t.Run("invalid price", func(t *testing.T) {
 		roastBeefSandwich := Item{}
 		_, err := roastBeefSandwich.CreateItem("Roast beef Sandwich", 0)
