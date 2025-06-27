@@ -13,6 +13,13 @@ func TestCreateItem(t *testing.T) {
 		}
 	}
 
+	assertValidString := func(t testing.TB, err error) {
+		t.Helper()
+		if err == nil {
+			t.Error("wanted an error but didn't get one")
+		}
+	}
+
 	t.Run("invalid price", func(t *testing.T) {
 		roastBeefSandwich := Item{}
 		_, err := roastBeefSandwich.CreateItem("Roast beef Sandwich", 0)
@@ -24,9 +31,7 @@ func TestCreateItem(t *testing.T) {
 		salad := Item{}
 		_, err := salad.CreateItem("", 12)
 
-		if err == nil {
-			t.Error("wanted an error but didn't get one")
-		}
+		assertValidString(t, err)
 	})
 }
 
