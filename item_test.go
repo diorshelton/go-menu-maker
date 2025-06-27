@@ -5,13 +5,14 @@ import (
 )
 
 func TestCreateItem(t *testing.T) {
-
-	assertError := func(t testing.TB, got error, want string) {
+	assertValidPrice := func(t testing.TB, got error, want error) {
 		t.Helper()
+
 		if got == nil {
 			t.Fatal("wanted and error but didn't get one")
 		}
-		if got.Error() != want {
+
+		if got != want {
 			t.Errorf("got %q, want %q", got, want)
 		}
 	}
@@ -31,7 +32,7 @@ func TestCreateItem(t *testing.T) {
 		roastBeefSandwich := Item{}
 		_, err := roastBeefSandwich.CreateItem("Roast beef Sandwich", 0)
 
-		assertError(t, err, "cannot create item with price of 0 or less")
+		assertValidPrice(t, err, ErrInvalidPrice)
 	})
 }
 
