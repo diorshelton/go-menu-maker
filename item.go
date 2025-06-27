@@ -13,12 +13,13 @@ type Item struct {
 }
 
 var ErrInvalidPrice = errors.New("cannot create item with price of 0 or less")
+var ErrInvalidName = errors.New("cannot create item with empty string")
 
 func (i Item) CreateItem(name string, price float64) (Item, error) {
 	inputString := strings.TrimSpace(name)
 
 	if inputString == "" {
-		return Item{}, errors.New("oh no hunny, not an empty string")
+		return Item{}, ErrInvalidName
 	}
 
 	if price <= 0 {
