@@ -10,7 +10,7 @@ func TestItemPrompt(t *testing.T) {
 	reader := strings.NewReader(input)
 
 	got := ItemPrompt(reader)
-	want := Item{Name: "boba tea", Price: 7.99}
+	want := MenuItem{Name: "boba tea", Price: 7.99}
 
 	if got != want {
 		t.Errorf("got %v want %v", got, want)
