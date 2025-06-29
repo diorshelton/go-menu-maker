@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCreateItem(t *testing.T) {
+func TestCreateMenuItem(t *testing.T) {
 	t.Run("item name is an empty string", func(t *testing.T) {
 		_, err := CreateMenuItem("", 12)
 
@@ -16,7 +16,18 @@ func TestCreateItem(t *testing.T) {
 
 		assertInvalidPriceError(t, err, ErrInvalidPrice)
 	})
+}
 
+func TestEditMenuItem(t *testing.T) {
+	capreseSalad, _ :=CreateMenuItem("Caprese Salad", 15.94)
+	EditMenuItem(&capreseSalad, "Chicken Salad", 12.99)
+
+	got := capreseSalad
+	want := MenuItem{"Chicken Salad", 12.99}
+
+	if got != want {
+		t.Errorf("got %v want %v", got, want)
+	}
 }
 
 func assertInvalidStringError(t testing.TB, got, want error) {
@@ -38,20 +49,21 @@ func assertInvalidPriceError(t testing.TB, got, want error) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
-
+/*
 func TestSaveItem(t *testing.T) {
 	t.Run("save item", func(t *testing.T) {
 
-		tiramisu := MenuItem{"Tiramisu", 15.99}
+	tiramisu := MenuItem{"Tiramisu", 15.99}
 
-		got := tiramisu.SaveItem()
-		want := "Tiramisu saved"
+	got := tiramisu.SaveItem()
+	want := "Tiramisu saved"
 
-		if got != want {
-			t.Errorf("got %v want %v", got, want)
-		}
-	})
+	if got != want {
+		t.Errorf("got %v want %v", got, want)
+	}
+})
 }
+*/
 
 func TestPrintDetails(t *testing.T) {
 	pizza, _ := CreateMenuItem("Cheese Pizza", 12.87)

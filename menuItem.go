@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -27,34 +29,50 @@ func CreateMenuItem(name string, price float64) (MenuItem, error) {
 	}
 
 	menuItem := MenuItem{name, price}
-	fmt.Printf("Created %v", menuItem.Name)
+
+	fmt.Printf("Created %v\n", menuItem.Name)
 	return menuItem, nil
 }
 
-
-func (i MenuItem) SaveItem() string {
-	// // Marshal the struct into pretty-printed JSON
-	// jsonData, err := json.MarshalIndent(i, "", " ")
-	// if err != nil {
-	// 	fmt.Println("Error marshaling JSON:", err)
-	// }
-	// // read file
-	// menuItemsContent, err := os.ReadFile("menuItem.json")
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// }
-	// //Unmarshal JSON data
-	// var itemData []I
-	// //Write JSON data to a file
-	// err = os.WriteFile("menuItems.json", jsonData, 0644)
-	// if err != nil {
-	// 	fmt.Println("Error writing to file:", err)
-	// 	return err.Error()
-	// }
-	return i.Name + " " + "saved"
+func EditMenuItem(m *MenuItem, name string, price float64) {
+//find item in array first,
+//
+// then edit
+	m.Name = name
+	m.Price = price
 }
 
-func (i MenuItem) PrintDetails() string {
+func (m *MenuItem) SaveItem()  {
+	//Check for existing file and read contents
+		menuItemsFile, err := os.ReadFile("menuItems.json")
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	//Unmarshal JSON data
+		var menuItemsData []MenuItem
+		err = json.Unmarshal(menuItemsFile, &menuItemsData)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	//Append new data
+		newMenuItem := m
+		menuItemsData = append(menuItemsData,*newMenuItem)
+
+	// Marshal the struct into pretty-printed JSON
+	updatedJSONData, err := json.MarshalIndent(menuItemsData, "", " ")
+	if err != nil {
+		fmt.Printf("Error marshaling JSON:%v", err)
+	}
+
+	//Write JSON data to a file
+	err = os.WriteFile("menuItems.json", updatedJSONData, 0644)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+	}
+	fmt.Printf("%v saved\n",m.Name)
+}
+
+func (i *MenuItem) PrintDetails() string {
 	stringVal := strconv.FormatFloat(i.Price, 'f', -1, 64)
 
 	printString := fmt.Sprintf("%v, $%v", i.Name, stringVal)
