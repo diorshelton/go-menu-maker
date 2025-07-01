@@ -9,15 +9,26 @@ import (
 	"strings"
 )
 
+type Category int
+
+const (
+	Appetizer Category= iota
+	Entree
+	Dessert
+	Drink
+)
+
 type MenuItem struct {
 	Name  string  `json:"name"`
 	Price float64 `json:"price"`
+	Category Category `json:"category"`
 }
+
 
 var ErrInvalidPrice = errors.New("cannot create item with price of 0 or less")
 var ErrInvalidName = errors.New("cannot create item with empty string")
 
-func CreateMenuItem(name string, price float64) (MenuItem, error) {
+func CreateMenuItem(name string, price float64, cat Category) (MenuItem, error) {
 	inputString := strings.TrimSpace(name)
 
 	if inputString == "" {
@@ -28,7 +39,7 @@ func CreateMenuItem(name string, price float64) (MenuItem, error) {
 		return MenuItem{}, ErrInvalidPrice
 	}
 
-	menuItem := MenuItem{name, price}
+	menuItem := MenuItem{name, price, cat}
 
 	fmt.Printf("Created %v\n", menuItem.Name)
 	return menuItem, nil
