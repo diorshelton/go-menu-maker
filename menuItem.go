@@ -12,16 +12,15 @@ import (
 type Category int
 
 const (
-	Appetizer Category= iota
+	Appetizer Category = iota
 	Entree
 	Dessert
 	Drink
 )
 
-
 type MenuItem struct {
-	Name  string  `json:"name"`
-	Price float64 `json:"price"`
+	Name     string   `json:"name"`
+	Price    float64  `json:"price"`
 	Category Category `json:"category"`
 }
 
@@ -32,7 +31,7 @@ var categoryName = map[string]Category{
 	"3": Drink,
 }
 
-func  ReturnCategory(s string) Category {
+func ReturnCategory(s string) Category {
 	return categoryName[s]
 }
 
@@ -57,28 +56,28 @@ func CreateMenuItem(name string, price float64, cat Category) (MenuItem, error) 
 }
 
 func EditMenuItem(m *MenuItem, name string, price float64) {
-//find item in array first,
-//
-// then edit
+	//find item in array first,
+	//
+	// then edit
 	m.Name = name
 	m.Price = price
 }
 
-func (m *MenuItem) SaveItem()  {
+func (m *MenuItem) SaveItem() {
 	//Check for existing file and read contents
-		menuItemsFile, err := os.ReadFile("menuItems.json")
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	menuItemsFile, err := os.ReadFile("menuItems.json")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	//Unmarshal JSON data
-		var menuItemsData []MenuItem
-		err = json.Unmarshal(menuItemsFile, &menuItemsData)
-		if err != nil {
-			fmt.Println(err.Error())
-		}
+	var menuItemsData []MenuItem
+	err = json.Unmarshal(menuItemsFile, &menuItemsData)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	//Append new data
-		newMenuItem := m
-		menuItemsData = append(menuItemsData,*newMenuItem)
+	newMenuItem := m
+	menuItemsData = append(menuItemsData, *newMenuItem)
 
 	// Marshal the struct into pretty-printed JSON
 	updatedJSONData, err := json.MarshalIndent(menuItemsData, "", " ")
@@ -91,7 +90,7 @@ func (m *MenuItem) SaveItem()  {
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
 	}
-	fmt.Printf("%v saved\n",m.Name)
+	fmt.Printf("%v saved\n", m.Name)
 }
 
 func (i *MenuItem) PrintDetails() string {

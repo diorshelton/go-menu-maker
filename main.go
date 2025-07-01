@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
- ItemPrompt(os.Stdin)
+	ItemPrompt(os.Stdin)
 }

@@ -31,7 +31,7 @@ func TestCreateMenuItem(t *testing.T) {
 }
 
 func TestEditMenuItem(t *testing.T) {
-	capreseSalad, _ :=CreateMenuItem("Caprese Salad", 15.94, Entree)
+	capreseSalad, _ := CreateMenuItem("Caprese Salad", 15.94, Entree)
 	EditMenuItem(&capreseSalad, "Chicken Salad", 12.99)
 
 	got := capreseSalad
@@ -61,6 +61,7 @@ func assertInvalidPriceError(t testing.TB, got, want error) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
+
 /*
 func TestSaveItem(t *testing.T) {
 	t.Run("save item", func(t *testing.T) {

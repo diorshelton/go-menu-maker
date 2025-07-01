@@ -36,7 +36,7 @@ func ItemPrompt(reader io.Reader) MenuItem {
 			fmt.Printf("Invalid cost, '%s'.Please enter a valid price.\n", stringPrice)
 			continue
 		}
-	//Input menuItem category
+		//Input menuItem category
 		fmt.Printf("What is the item category? \n 0:Appetizer, 1:Entree, 2:Dessert, 3:Drink")
 		category, err := buf.ReadString('\n')
 
@@ -45,7 +45,7 @@ func ItemPrompt(reader io.Reader) MenuItem {
 			continue
 		}
 
-		 itemCategory = ReturnCategory(strings.TrimSpace(category))
+		itemCategory = ReturnCategory(strings.TrimSpace(category))
 
 		// Verify item details
 		fmt.Printf("Is this information correct? (y/n)\n%v %.2f %v?\n", itemName, itemPrice, itemCategory)
