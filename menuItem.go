@@ -18,12 +18,23 @@ const (
 	Drink
 )
 
+
 type MenuItem struct {
 	Name  string  `json:"name"`
 	Price float64 `json:"price"`
 	Category Category `json:"category"`
 }
 
+var categoryName = map[string]Category{
+	"0": Appetizer,
+	"1": Entree,
+	"2": Dessert,
+	"3": Drink,
+}
+
+func  ReturnCategory(s string) Category {
+	return categoryName[s]
+}
 
 var ErrInvalidPrice = errors.New("cannot create item with price of 0 or less")
 var ErrInvalidName = errors.New("cannot create item with empty string")
