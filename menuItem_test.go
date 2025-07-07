@@ -16,16 +16,16 @@ func TestCreateMenuItem(t *testing.T) {
 
 		assertInvalidPriceError(t, err, ErrInvalidPrice)
 	})
-	t.Run("item has a category type", func(t *testing.T) {
+	t.Run("item has a category", func(t *testing.T) {
 		rb, err := CreateMenuItem("roast beef sandwich", 12.50, Entree)
 		if err != nil {
 			t.Fatalf("err %s", err)
 		}
-		category := rb.Category
-		expected := Entree
+		got := rb.Category
+		want := Entree
 
-		if category != expected {
-			t.Errorf("expected %v but got %v", expected, category)
+		if got != want {
+			t.Errorf("want %v but got %v", want, got)
 		}
 	})
 }

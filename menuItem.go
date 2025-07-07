@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-type Category int
+type Category string
 
 const (
-	Appetizer Category = iota
-	Entree
-	Dessert
-	Drink
+	Appetizer Category = "appetizer"
+	Entree    Category = "entree"
+	Dessert   Category = "dessert"
+	Drink     Category = "drink"
 )
 
 type MenuItem struct {
