@@ -2,17 +2,9 @@ package main
 
 import (
 	"bufio"
-
-
-
-
 	"fmt"
-
 	"io"
-
-
 	"strconv"
-
 	"strings"
 )
 
