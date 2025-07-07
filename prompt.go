@@ -2,9 +2,17 @@ package main
 
 import (
 	"bufio"
+
+
+
+
 	"fmt"
+
 	"io"
+
+
 	"strconv"
+
 	"strings"
 )
 
@@ -61,6 +69,7 @@ func ItemPrompt(reader io.Reader) MenuItem {
 	}
 
 	item := MenuItem{Name: itemName, Price: itemPrice, Category: itemCategory}
+
 	fmt.Printf("Item created: %+v\n", item)
 	return item
 }
