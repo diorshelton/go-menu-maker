@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func ItemPrompt(reader io.Reader) MenuItem {
+func ItemPrompt(reader io.Reader) (MenuItem, error) {
 	buf := bufio.NewReader(reader)
 	var itemName string
 	var itemPrice float64
@@ -60,8 +60,8 @@ func ItemPrompt(reader io.Reader) MenuItem {
 		}
 	}
 
-	item := MenuItem{Name: itemName, Price: itemPrice, Category: itemCategory}
+	item, err := CreateMenuItem(itemName, itemPrice, itemCategory)
 
 	fmt.Printf("Item created: %+v\n", item)
-	return item
+	return item, err
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"github.com/google/uuid"
 )
 
 func TestCreateMenuItem(t *testing.T) {
@@ -28,18 +29,33 @@ func TestCreateMenuItem(t *testing.T) {
 			t.Errorf("want %v but got %v", want, got)
 		}
 	})
+	t.Run("item has an id", func(t *testing.T) {
+		spaghetti, err := CreateMenuItem("spaghetti", 24.95, Entree)
+
+		if err != nil {
+			t.Errorf("Item creation err:%v", err)
+		}
+
+		got := spaghetti.ID
+		if got == uuid.Nil {
+			t.Errorf("got %v a nil value for id",got)
+		}
+	})
 }
 
 func TestEditMenuItem(t *testing.T) {
-	capreseSalad, _ := CreateMenuItem("Caprese Salad", 15.94, Entree)
-	EditMenuItem(&capreseSalad, "Chicken Salad", 12.99)
+	t.Run("Can edit menu item", func(t *testing.T) {
 
-	got := capreseSalad
-	want := MenuItem{"Chicken Salad", 12.99, Entree}
+		capreseSalad, _ := CreateMenuItem("Caprese Salad", 15.94, Entree)
+		EditMenuItem(&capreseSalad, "Chicken Salad", 12.99)
 
-	if got != want {
-		t.Errorf("got %v want %v", got, want)
-	}
+		got := capreseSalad
+		want := MenuItem{"Chicken Salad", 12.99, Entree, capreseSalad.ID}
+
+		if got != want {
+			t.Errorf("got %v want %v", got, want)
+		}
+	})
 }
 
 func assertInvalidStringError(t testing.TB, got, want error) {
