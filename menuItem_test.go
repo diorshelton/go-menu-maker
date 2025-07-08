@@ -1,8 +1,8 @@
 package main
 
 import (
-	"testing"
 	"github.com/google/uuid"
+	"testing"
 )
 
 func TestCreateMenuItem(t *testing.T) {
@@ -38,7 +38,7 @@ func TestCreateMenuItem(t *testing.T) {
 
 		got := spaghetti.ID
 		if got == uuid.Nil {
-			t.Errorf("got %v a nil value for id",got)
+			t.Errorf("got %v a nil value for id", got)
 		}
 	})
 }
