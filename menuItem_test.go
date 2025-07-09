@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -60,9 +61,11 @@ func TestEditMenuItem(t *testing.T) {
 
 func assertInvalidStringError(t testing.TB, got, want error) {
 	t.Helper()
+
 	if got == nil {
 		t.Fatal("wanted an error but didn't get one")
 	}
+
 	if got != want {
 		t.Errorf("got %q, want %q", got, want)
 	}
@@ -77,22 +80,32 @@ func assertInvalidPriceError(t testing.TB, got, want error) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
+func TestSave(t *testing.T) {
+	t.Run("alert if item name already exists in list", func(t *testing.T) {
 
-/*
-func TestSaveItem(t *testing.T) {
-	t.Run("save item", func(t *testing.T) {
+		Lasagna, _ := CreateMenuItem("Lasagna", 15.99, Dessert)
 
-	tiramisu := MenuItem{"Tiramisu", 15.99}
-
-	got := tiramisu.SaveItem()
-	want := "Tiramisu saved"
-
-	if got != want {
-		t.Errorf("got %v want %v", got, want)
-	}
-})
+		items := Save(&Lasagna)
+		itemExists(t, &items, Lasagna)
+	})
 }
-*/
+
+func itemExists(t testing.TB, items *[]MenuItem, item MenuItem) {
+	t.Helper()
+
+	got := func() error {
+		for _, value := range *items {
+			if value.Name == item.Name {
+				return errors.New("item already saved")
+			}
+		}
+		return nil
+	}
+
+	if got() == nil {
+		t.Fatalf("Items list already has %v", item.Name)
+	}
+}
 
 func TestPrintDetails(t *testing.T) {
 	pizza, _ := CreateMenuItem("Cheese Pizza", 12.87, Entree)

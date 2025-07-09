@@ -66,34 +66,21 @@ func EditMenuItem(m *MenuItem, name string, price float64) {
 	m.Price = price
 }
 
-func (m *MenuItem) SaveItem() {
+func Save(m *MenuItem) []MenuItem {
 	//Check for existing file and read contents
 	menuItemsFile, err := os.ReadFile("menuItems.json")
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err)
 	}
 	//Unmarshal JSON data
 	var menuItemsData []MenuItem
 	err = json.Unmarshal(menuItemsFile, &menuItemsData)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println(err)
 	}
 	//Append new data
-	newMenuItem := m
-	menuItemsData = append(menuItemsData, *newMenuItem)
-
-	// Marshal the struct into pretty-printed JSON
-	updatedJSONData, err := json.MarshalIndent(menuItemsData, "", " ")
-	if err != nil {
-		fmt.Printf("Error marshaling JSON:%v", err)
-	}
-
-	//Write JSON data to a file
-	err = os.WriteFile("menuItems.json", updatedJSONData, 0644)
-	if err != nil {
-		fmt.Println("Error writing to file:", err)
-	}
-	fmt.Printf("%v saved\n", m.Name)
+	fmt.Printf("menu items:%v", menuItemsData)
+	return menuItemsData
 }
 
 func (i *MenuItem) PrintDetails() string {
