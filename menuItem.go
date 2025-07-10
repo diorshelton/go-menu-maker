@@ -44,7 +44,7 @@ func CreateMenuItem(name string, price float64, cat Category) (MenuItem, error) 
 
 	menuItem := MenuItem{name, price, cat, id}
 
-	fmt.Printf("Created %v\n", menuItem.Name)
+	Save(&menuItem)
 	return menuItem, nil
 }
 
@@ -67,7 +67,7 @@ func EditMenuItem(m *MenuItem, name string, price float64) {
 	m.Price = price
 }
 
-func Save(m *MenuItem) ([]MenuItem, error) {
+func Save(m *MenuItem) error {
 	//Check for existing file and read contents
 	menuItemsFile, err := os.ReadFile("menuItems.json")
 	if err != nil {
@@ -82,9 +82,26 @@ func Save(m *MenuItem) ([]MenuItem, error) {
 	// Check for menu item name in data
 	exists := itemAlreadyExists(&menuItemsData, m)
 	if exists {
-		return menuItemsData, ErrAlreadyInList
+		fmt.Printf("Error occurred, %v", ErrAlreadyInList)
+		return ErrAlreadyInList
 	}
-	return menuItemsData, nil
+	//Append new data
+	newMenuItem := m
+	menuItemsData = append(menuItemsData, *newMenuItem)
+
+	// Marshal the struct into pretty-printed JSON
+	updatedJSONData, err := json.MarshalIndent(menuItemsData, "", " ")
+	if err != nil {
+		fmt.Printf("Error marshaling JSON:%v", err)
+	}
+
+	//Write JSON data to a file
+	err = os.WriteFile("menuItems.json", updatedJSONData, 0644)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+	}
+	fmt.Printf("%v saved\n", m.Name)
+	return nil
 }
 
 func itemAlreadyExists(items *[]MenuItem, i *MenuItem) bool {

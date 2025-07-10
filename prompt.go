@@ -62,6 +62,5 @@ func ItemPrompt(reader io.Reader) (MenuItem, error) {
 
 	item, err := CreateMenuItem(itemName, itemPrice, itemCategory)
 
-	fmt.Printf("Item created: %+v\n", item)
 	return item, err
 }

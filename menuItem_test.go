@@ -84,7 +84,7 @@ func TestSave(t *testing.T) {
 
 		Lasagna, _ := CreateMenuItem("Lasagna", 15.99, Dessert)
 
-		_, got := Save(&Lasagna)
+		got := Save(&Lasagna)
 		want := ErrAlreadyInList
 		assertItemExists(t, got, want)
 	})
