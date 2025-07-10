@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"github.com/google/uuid"
 	"testing"
 )
@@ -85,25 +84,20 @@ func TestSave(t *testing.T) {
 
 		Lasagna, _ := CreateMenuItem("Lasagna", 15.99, Dessert)
 
-		items := Save(&Lasagna)
-		itemExists(t, &items, Lasagna)
+		_, got := Save(&Lasagna)
+		want := ErrAlreadyInList
+		assertItemExists(t, got, want)
 	})
 }
 
-func itemExists(t testing.TB, items *[]MenuItem, item MenuItem) {
+func assertItemExists(t testing.TB, got, want error) {
 	t.Helper()
-
-	got := func() error {
-		for _, value := range *items {
-			if value.Name == item.Name {
-				return errors.New("item already saved")
-			}
-		}
-		return nil
+	if got == nil {
+		t.Fatal("wanted an error but didn't get one")
 	}
 
-	if got() == nil {
-		t.Fatalf("Items list already has %v", item.Name)
+	if got != want {
+		t.Errorf("got %v, want\n%v", got, want)
 	}
 }
 

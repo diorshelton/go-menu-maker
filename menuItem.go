@@ -28,6 +28,7 @@ type MenuItem struct {
 
 var ErrInvalidPrice = errors.New("cannot create item with price of 0 or less")
 var ErrInvalidName = errors.New("cannot create item with empty string")
+var ErrAlreadyInList = errors.New("item already in list")
 
 func CreateMenuItem(name string, price float64, cat Category) (MenuItem, error) {
 	id := uuid.New()
@@ -66,7 +67,7 @@ func EditMenuItem(m *MenuItem, name string, price float64) {
 	m.Price = price
 }
 
-func Save(m *MenuItem) []MenuItem {
+func Save(m *MenuItem) ([]MenuItem, error) {
 	//Check for existing file and read contents
 	menuItemsFile, err := os.ReadFile("menuItems.json")
 	if err != nil {
@@ -78,9 +79,21 @@ func Save(m *MenuItem) []MenuItem {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//Append new data
-	fmt.Printf("menu items:%v", menuItemsData)
-	return menuItemsData
+	// Check for menu item name in data
+	exists := itemAlreadyExists(&menuItemsData, m)
+	if exists {
+		return menuItemsData, ErrAlreadyInList
+	}
+	return menuItemsData, nil
+}
+
+func itemAlreadyExists(items *[]MenuItem, i *MenuItem) bool {
+	for _, value := range *items {
+		if value.Name == i.Name {
+			return true
+		}
+	}
+	return false
 }
 
 func (i *MenuItem) PrintDetails() string {
