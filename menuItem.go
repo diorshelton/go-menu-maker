@@ -59,12 +59,9 @@ func ReturnCategory(s string) Category {
 	return categoryName[s]
 }
 
-func EditMenuItem(m *MenuItem, name string, price float64) {
+func EditMenuItem(m *MenuItem) {
 	//find item in array first,
-	//
-	// then edit
-	m.Name = name
-	m.Price = price
+
 }
 
 func Save(m *MenuItem) error {
@@ -80,7 +77,7 @@ func Save(m *MenuItem) error {
 		fmt.Println(err)
 	}
 	// Check for menu item name in data
-	exists := itemAlreadyExists(&menuItemsData, m)
+	exists := Find(m, &menuItemsData)
 	if exists {
 		fmt.Printf("Error occurred, %v", ErrAlreadyInList)
 		return ErrAlreadyInList
@@ -104,7 +101,7 @@ func Save(m *MenuItem) error {
 	return nil
 }
 
-func itemAlreadyExists(items *[]MenuItem, i *MenuItem) bool {
+func Find(i *MenuItem, items *[]MenuItem) bool {
 	for _, value := range *items {
 		if value.Name == i.Name {
 			return true

@@ -46,5 +46,35 @@
   "price": 4.99,
   "category": "appetizer",
   "id": "2b8bb6fe-d4ce-4d69-a2d1-7b3b9fc06ced"
+ },
+ {
+  "name": "roast beef sandwich",
+  "price": 12.5,
+  "category": "entree",
+  "id": "2858711a-d1bf-41a3-acf6-8b62c6ebe717"
+ },
+ {
+  "name": "spaghetti",
+  "price": 24.95,
+  "category": "entree",
+  "id": "0c6fbd65-5e30-436f-b6cb-e075e2076ee2"
+ },
+ {
+  "name": "Caprese Salad",
+  "price": 15.94,
+  "category": "entree",
+  "id": "2d327821-d507-4c89-9c84-0749260bf58c"
+ },
+ {
+  "name": "Cheese Pizza",
+  "price": 12.87,
+  "category": "entree",
+  "id": "9d55fe2a-54d6-4a5b-b2df-89a483c1ed62"
+ },
+ {
+  "name": "risotto",
+  "price": 19,
+  "category": "entree",
+  "id": "61709f34-7c86-4a8e-8432-df24bf979b7b"
  }
 ]
